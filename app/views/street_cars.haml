@@ -1,0 +1,11 @@
+- routes = { spadina: [:north, :south], college: [:east, :west], dundas: [:east, :west] }
+
+- direction_map = { north: "up", south: "down", east: "right", west: "left"}
+
+.streetcar-map
+  - routes.each do |street, directions|
+    - directions.each do |d|
+      %div{:class => "#{street}-#{d}".downcase}
+        = # %i{:class => "icon-arrow-#{direction_map[d]}"}
+        = "#{street} #{d}bound".titleize
+        %span.time 2:00pm

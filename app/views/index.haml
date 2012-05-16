@@ -1,0 +1,21 @@
+- pages = [ {title: "Home"}, {title: "Browse Music", icon: "headphones"}, {title: "Door Logs", icon: "th-list"}, {title: "News", icon: "inbox"}, {title: "Weather Report", icon: "bar-chart"}, {title: "Street Cars", icon: "road"}, {title: "Cats", icon: "github-sign"} ]
+
+.pages.show-page-0
+  %div{:class => "page-0"}
+    = haml :home, locals: {pages: pages}, layout: false
+
+  - pages[1..-1].each_with_index do |page, index|
+    %div{:class => "page-#{index+1}"}
+      .container
+        .row.title
+          .span12
+            %h1
+              %i{:class => "icon-#{page[:icon]}"}
+              %span.touch= page[:title]
+        = haml page[:title].downcase.gsub(" ", "_").to_sym, layout: false
+        .row
+          .span12
+            .btn.btn-primary.btn-large.pull-right.home-btn Back to the other stuffs
+
+.modal.hide.fade#newsModal
+  = haml :"modals/news_article", layout: false
