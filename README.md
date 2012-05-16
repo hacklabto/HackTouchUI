@@ -11,7 +11,7 @@ Follow each instruction in chronological order for a working installation. Do no
 
 1. Install rbenv (or RVM) and ruby 1.9.3
 2. `ruby scripts/bootstrap.rb`
-
+3. `gem install unicorn` (because it isn't in the gemfile yet)
 
 Running the Server
 -------------------
