@@ -1,5 +1,5 @@
-ImplicitCAD.org
-================
+HackTouch UI
+=============
 
 
 Installation Instructions
@@ -18,7 +18,5 @@ Running the Server
 
 This will start the server with a self-certified ssl certificate. If you need a certified ssl god help you.
 
-1. `padrino rake start`
-  * Note: the -e option can be used to specify a production environment (the default is development) like so `padrino rake start -e production`
-
+1. `unicorn -p 8081`
 
