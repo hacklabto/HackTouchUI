@@ -8,4 +8,4 @@
       %div{:class => "#{street}-#{d}".downcase}
         = # %i{:class => "icon-arrow-#{direction_map[d]}"}
         = "#{street} #{d}bound".titleize
-        %span.time 2:00pm
+        %span.time{:id => "#{street}#{d}"} Undefined

@@ -12,15 +12,24 @@
 
 .row.kitten-images
   .span6
-    .image{style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
+    %a{id:"kitten0vote", href: "javascript: getKitten()"}
+      .image{id: "kitten0", style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
   .span6
-    .image{style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
+    %a{id:"kitten1vote", href: "javascript: getKitten()"}
+      .image{id: "kitten1", style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
 .kitten-images-background
-
+.row.kitten-names
+  .span6
+    .kitten-name{:id=>"kitten0name"} Bob
+  .span6
+    .kitten-name{:id=>"kitten1name"} Joe
 .row.kitten-results
   .span12
-    %span.results-0 42%
-    of the other scientists think your
-    %span.label.label-important wrong
-    (oh no!). Perhaps you should try adding more science?
+    %span.results-0
+    Unfortunately voting is currently 
+    %span.label.label-important BROKEN
+    Perhaps you should fix it with science?
+.row
+  .span12
+    .btn.btn-primary.btn-large.pull-left.draw-btn Draw
   

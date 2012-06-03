@@ -14,6 +14,47 @@ $ ->
     $clock.html(Date.create().format '{Weekday} {Month} {d}, {12hr}:{mm}{tt}')
   window.setInterval clock_tick, 1000
 
+# StreetCar
+$ ->
+
+  routes =
+  spadinanorth:
+    route: 510
+    stopid: 6577
+  spadinasouth:
+    route: 510
+    stopid: 3159
+  collegeeast:
+    route: 506
+    stopid: 1010
+  collegewest:
+    route: 506
+    stopid: 9193
+  dundaseast:
+    route: 505
+    stopid: 6046
+  dundaswest:
+    route: 505
+    stopid: 1212
+    
+    
+  update = ->
+    updatePrediction(510,3159,"times") #For front page
+    updatePrediction(510,6577,"timen")
+    
+    predicts = for element,param of routes
+      updatePrediction(param.route, param.stopid, element)
+
+  window.setInterval update, 60000
+  
+  update()
+
+
+#Cats
+$ ->
+  getKitten()
+  $(".draw-btn").click ->   getKitten()
+
 
 # Volume Control
 $ ->
