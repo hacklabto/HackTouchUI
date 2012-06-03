@@ -22,7 +22,7 @@
 
       - buttons = [ {title: "Play", icon: "play"}, {title: "Pause", icon: "pause"}, {title: "Stop", icon: "stop"} ]
       - buttons.each do |b|
-        .btn.btn-large{:style => (b[:title] == "Pause")? "display: none;" : ""}
+        .btn.btn-large{:id => b[:icon], :style => (b[:title] == "Pause")? "display: none;" : ""}
           %i{:class=>"icon-#{b[:icon]}"}
           = b[:title]
 
@@ -53,6 +53,8 @@
         .icon-arrow-up
         Next North Bound Streetcar:
         .time{:id => "timen"}= #JS set
+  .row
+    .streetcars.span12
       .streetcar.south
         .icon-arrow-down
         Next South Bound Streetcar:

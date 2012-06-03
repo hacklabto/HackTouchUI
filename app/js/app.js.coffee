@@ -50,6 +50,13 @@ $ ->
   update()
 
 
+# Weather Updates:
+# Auto every 10 minutes
+$ ->
+  weatherupdate = ->
+    weatherUpdate()
+  window.setInterval weatherupdate, 600000
+
 #Cats
 $ ->
   getKitten()
@@ -74,7 +81,14 @@ $ ->
 
 # Music Player
 # TODO
-
+# $ ->
+#  $("#play").click ->
+#    console.log("test")
+#    $.ajax '/play',
+#      type: 'GET'
+#      dataType: 'html'
+#      success: (data, textStatus, jqXHR) ->
+#        console.log(data)
 
 # Browse Music
 $ ->

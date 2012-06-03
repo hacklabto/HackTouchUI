@@ -30,3 +30,6 @@ gem 'rack-sprockets', require: 'rack/sprockets', :git => "https://github.com/kel
 gem "padrino-assets", :git => "https://github.com/D1plo1d/padrino-assets.git"
 #gem "padrino-assets", :path => "../gems/padrino-assets/"
 
+# Weather plugin
+gem "yahoo_weatherman", "~> 1.1.5"
+
