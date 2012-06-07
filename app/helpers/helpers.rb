@@ -16,7 +16,7 @@ App.helpers do
   # This code works well but could do with some refactoring to combine similar code in the weather_temp_* and weather_condition_* methods
   # - Rob
   # PS. I am totally nitpicking here, lets be honest - I would never have gotten this done alone.
-  # Thanks ATrain and Geordie, this would not have happened without you guys picking up where I left off!
+  # Thanks again ATrain and Geordie, this would not have happened without you guys picking up where I left off!
 
 
   def load_weatherman
