@@ -57,6 +57,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.17.2)
     multi_json (1.1.0)
+    nokogiri (1.5.3)
     ns-options (0.3.1)
     padrino (0.10.6.c)
       padrino-admin (= 0.10.6.c)
@@ -119,6 +120,8 @@ GEM
       rack
     warden (1.1.1)
       rack (>= 1.0)
+    yahoo_weatherman (1.1.5)
+      nokogiri
 
 PLATFORMS
   ruby
@@ -134,3 +137,4 @@ DEPENDENCIES
   sinatra-flash
   sprockets (>= 2.0)
   thin
+  yahoo_weatherman (~> 1.1.5)

@@ -10,9 +10,10 @@
 # Clock
 $ ->
   $clock = $(".now")
-  clock_tick = ->
+  clockTick = ->
     $clock.html(Date.create().format '{Weekday} {Month} {d}, {12hr}:{mm}{tt}')
-  window.setInterval clock_tick, 1000
+
+  window.setInterval clockTick, 1000
 
 # StreetCar
 $ ->
@@ -20,32 +21,61 @@ $ ->
   routes =
   spadinanorth:
     route: 510
-    stopid: 6577
+    stopId: 6577
   spadinasouth:
     route: 510
-    stopid: 3159
+    stopId: 3159
   collegeeast:
     route: 506
-    stopid: 1010
+    stopId: 1010
   collegewest:
     route: 506
-    stopid: 9193
+    stopId: 9193
   dundaseast:
     route: 505
-    stopid: 6046
+    stopId: 6046
   dundaswest:
     route: 505
-    stopid: 1212
-    
-    
+    stopId: 1212
+
+
+  $streetcarsUpdated = $(".streetcars-updated-timestamp")
+  streetcarsTick = ->
+    updated = $streetcarsUpdated.data("timestamp")
+    $streetcarsUpdated.html if updated? then new Date(updated).relative() else "never"
+
+  streetcarsTick()
+  window.setInterval streetcarsTick, 15000
+
+
+  renderSchedule = (schedule) ->
+    console.log times
+
+    # Generating nice, human readable bus times
+    dateStrings = for date in Object.values(schedule)[0]
+      date.format('{12hr}:{mm} {tt}')
+      # Relative street car schedule formatting left here for easy uncommenting in case it turns out that people hate the absolute times
+      #date.relative (val,unit ) -> "#{val} #{Date.getLocale().units[unit][0..2]}"
+
+    this.html dateStrings.join("<span class='comma'>, </span>")
+    # Update the streetcars last updated ticker
+    $(".streetcars-updated-timestamp").data("timestamp", Date.now())
+    streetcarsTick()
+    return true
+
+
   update = ->
-    updatePrediction(510,3159,"times") #For front page
-    updatePrediction(510,6577,"timen")
-    
+    # Front Page - Northbound
+    updatePrediction 510, 3159, renderSchedule.bind $("#times")
+    # Front Page - Southbound
+    updatePrediction 510, 6577, renderSchedule.bind $("#timen")
+
+    # Street cars page
     predicts = for element,param of routes
-      updatePrediction(param.route, param.stopid, element)
+      updatePrediction param.route, param.stopId, renderSchedule.bind $("##{element}")
 
   window.setInterval update, 60000
+  
   
   update()
 
