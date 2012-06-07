@@ -9,88 +9,103 @@ App.helpers do
   # I don't know where's the model in padrino
   # So I'm adding a method into the helper which is not that great. I know.
   # I'm creating a weather method which will be called directly from the view
-  
+  # - ATrain
+
+  # Hitting the weatherman api once per request, if this becomes high traffic this should be cached
+  # (this is not very likely on the hack touch though, only sucks on dev environments because page loads are slowed by hitting the api).
+  # This code works well but could do with some refactoring to combine similar code in the weather_temp_* and weather_condition_* methods
+  # - Rob
+  # PS. I am totally nitpicking here, lets be honest - I would never have gotten this done alone.
+  # Thanks ATrain and Geordie, this would not have happened without you guys picking up where I left off!
+
+
   def load_weatherman
-    client_weather = Weatherman::Client.new             # I'm calling the weather gem class
-    @weather_response = client_weather.lookup_by_woeid 4118      # 4118 is the city id from Yahoo weather
-    @weather_condition_yahoo_code = @weather_response.condition['code']      # Check http://developer.yahoo.com/weather/#codes
-    @weather_forecast = @weather_response.forecasts;
+    return if defined? @has_weather
+    begin
+      client_weather = Weatherman::Client.new             # I'm calling the weather gem class
+      @weather_response = client_weather.lookup_by_woeid 4118      # 4118 is the city id from Yahoo weather
+      @weather_condition_yahoo_code = @weather_response.condition['code']      # Check http://developer.yahoo.com/weather/#codes
+      @weather_forecast = @weather_response.forecasts
+      @has_weather = true
+    rescue # This gets called with the internet is down. In these cases we do not want the app to crash
+      @has_weather = false
+    end
   end
   
   # Temperature:
   def weather_temp_current
     load_weatherman
-    return @weather_response.condition['temp']
+    return @has_weather ? @weather_response.condition['temp'] : "unavailable"
   end
  
    def weather_temp_today_high
     load_weatherman
-    return @weather_forecast.first['high']
+    return @has_weather ? @weather_forecast.first['high'] : "unavailable"
   end
   
   def weather_temp_tomorrow_high
     load_weatherman
-    return @weather_forecast[1]['high']
+    return @has_weather ? @weather_forecast[1]['high'] : "unavailable"
   end
   
   def weather_temp_today_low
     load_weatherman
-    return @weather_forecast.first['low']
+    return @has_weather ? @weather_forecast.first['low'] : "unavailable"
   end
   
   def weather_temp_tomorrow_low
     load_weatherman
-    return @weather_forecast[1]['low']
+    return @has_weather ? @weather_forecast[1]['low'] : "unavailable"
   end
   
  # Condition (Text)
   def weather_condition_current
     load_weatherman
-    return @weather_response.condition['text']
+    return @has_weather ? @weather_response.condition['text'] : "unavailable"
   end
 
   def weather_condition_today
     load_weatherman
-    return @weather_forecast.first['text']
+    return @has_weather ? @weather_forecast.first['text'] : "unavailable"
   end
   
   def weather_condition_tomorrow
     load_weatherman
-    return @weather_forecast[1]['text']
+    return @has_weather ? @weather_forecast[1]['text'] : "unavailable"
   end
 
 
  # Icons:
   def show_weather_icon_current
     load_weatherman
-    code = @weather_response.condition['code'].to_i
+    code = @has_weather ? @weather_response.condition['code'].to_i : 35
     return show_weather_icon(code) 
   end
  
  
   def show_weather_icon_today
     load_weatherman
-    code = @weather_forecast[0]['code'].to_i
+    code = @has_weather ? @weather_forecast[0]['code'].to_i : 35
     return show_weather_icon(code) 
   end
   
   def show_weather_icon_tomorrow
     load_weatherman
-    code = @weather_forecast[1]['code'].to_i
+    code = @has_weather ? @weather_forecast[1]['code'].to_i : 35
     return show_weather_icon(code) 
   end
    
   # Misc:
   def weather_tomorrow_text
-    return @weather_forecast[1]['day']
+    return @has_weather ? @weather_forecast[1]['day'] : "unavailable"
   end
   
   def weather_windspeed
-    return @weather_response.wind['speed']
+    return @has_weather ? @weather_response.wind['speed'] : "unavailable"
   end
    
   def weather_humidity
-    return @weather_response.atmosphere['humidity']
+    return @has_weather ? @weather_response.atmosphere['humidity'] : "unavailable"
   end
    
   # Weather Icon Mapping
