@@ -172,7 +172,7 @@ App.helpers do
       when 29
         "medium-clouds-night" 
       when 30
-        ".medium-clouds-day" 
+        "medium-clouds-day" 
       when 31
         "clear-night" 
       when 32
