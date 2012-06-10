@@ -3,4 +3,7 @@ class App < Padrino::Application
   register Padrino::Mailer
   register Padrino::Helpers
   register Padrino::Assets
+  register Padrino::Cache
+  enable :caching
+  
 end

@@ -5,6 +5,73 @@ App.helpers do
   #  ...
   # end
   
+  def get_vlc
+    @vlc = VLCControl.new;
+    @vlc
+  end
+  
+  # Sen's code? from old hacktouch software. (the old 2 part ampq method)
+  
+  def stream_list
+    db = Sequel.connect("sqlite://#{File.dirname(__FILE__)}/../../hacktouch.sqlite3")
+    stream_list = {}
+    db[:audio_streams].order(:name).each do |stream|
+      stream_list[stream[:name]] = stream[:url];
+    end
+  stream_list
+  end
+  
+  def feed_list
+    db = Sequel.connect("sqlite://#{File.dirname(__FILE__)}/../../hacktouch.sqlite3")
+    stream_list = Array.new
+    db[:news_feeds].order(:name).each do |stream|
+      stream_list.push(stream[:url]);
+    end
+  stream_list
+  end
+
+  def refresh_feeds
+    feeds = []
+    feed_list.each do |source|
+      content = ""
+      feeds.push(SimpleRSS.parse open(source) )
+    end
+    feeds
+  end
+
+# Ugly, someone please clean this up.
+# Returns 5 articles from each source, all scrambled into a random order.
+  def getAllArticles
+    number_from_each = 5;
+    articles=Hash.new
+    total=0;
+    feeds = refresh_feeds; 
+    random_order = (0..(feeds.length*number_from_each-1)).to_a.sort {rand}
+    feeds.each do |feed|
+      for i in (0..number_from_each-1)
+         logger.info "Adding article #{random_order[total]}"
+         articles["#{random_order[total]}"] = getArticle(feed.items[i],feed)
+         total+=1
+       end
+    end
+    articles
+  end
+
+  def getArticle(article,src)
+    title = Sanitize.clean(article.title);
+    source = Sanitize.clean(src.channel.title);
+    content = Sanitize.clean("#{article.description}");
+    desc = content.slice(0,150);
+    if desc.length > 147
+      desc[147..150]="..."
+    end
+    article = { "title" => title, "content" => content, "source" => source, "description" => desc };
+    article
+  end
+  
+  
+  
+  
   # Chim's code 
   # I don't know where's the model in padrino
   # So I'm adding a method into the helper which is not that great. I know.

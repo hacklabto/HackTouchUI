@@ -33,3 +33,11 @@ gem "padrino-assets", :git => "https://github.com/D1plo1d/padrino-assets.git"
 # Weather plugin
 gem "yahoo_weatherman", "~> 1.1.5"
 
+#For config, etc:
+gem "sequel", "~> 3.36.1"
+gem "sqlite3", "~> 1.3.6"
+gem "simple-rss", "~> 1.2.3"
+gem "sanitize", "~> 2.0.3"
+gem "json", "~> 1.6.5"
+gem "vlcrc", "~> 0.1.15"
+

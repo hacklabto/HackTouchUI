@@ -1,67 +1,48 @@
-.container
-  .row.title
-    .span8
-      %h1
-        %span.hack Hack
-        %span.touch Touch
+.row.title
+  .span8
+  .now= # JS sets the inner html of this to the current time
 
-      %h2 *now with 100% more 2.0
-    .now= # JS sets the inner html of this to the current time
+.row.music-player
+  .span12
+    %hr
+    .music-title
+      %i.icon-headphones
+      %span.song-name Baptism - Crystal Castles
+    .volume-level
+      %i.icon-volume-down
+      .progress.progress-success.volume-level-progress
+        .bar{style: "width: 40%"}
+      %i.icon-volume-up
 
-  .row.music-player
-    .span12
-      %hr
-      .music-title
-        %i.icon-headphones
-        %span.song-name Baptism - Crystal Castles
-      .volume-level
-        %i.icon-volume-down
-        .progress.progress-success.volume-level-progress
-          .bar{style: "width: 40%"}
-        %i.icon-volume-up
+    - buttons = [ {title: "Play", icon: "play"}, {title: "Pause", icon: "pause"}, {title: "Stop", icon: "stop"} ]
+    - buttons.each do |b|
+      .btn.btn-large{:id => b[:icon], :style => (b[:title] == "Pause")? "display: none;" : ""}
+        %i{:class=>"icon-#{b[:icon]}"}
+        = b[:title]
 
-      - buttons = [ {title: "Play", icon: "play"}, {title: "Pause", icon: "pause"}, {title: "Stop", icon: "stop"} ]
-      - buttons.each do |b|
-        .btn.btn-large{:id => b[:icon], :style => (b[:title] == "Pause")? "display: none;" : ""}
-          %i{:class=>"icon-#{b[:icon]}"}
-          = b[:title]
+    %hr.music-hr
 
+.row.news
+  .span12.article
+    %h2{:id => "news-title-home"} A Man dies at 90
+    %p.news-description{:id => "news-description-home"}
+      A local man died of old age at the age of 90 because he was old.
+    %a.news-more{:href=>"#"} Read more...
+    %p.news-content.newshidden{:id => "news-content-home"}
+      A local man died of old age at the age of 90 because he was old.
+    %p.news-source.newshidden{:id => "news-source-home"}
+      Bob told me
+    %hr
 
-      .progress.progress-success.playback-progress
-        .bar{style: "width: 20%"}
-      %hr.music-hr
-
-  .row.buttons
-    .span12
-      - pages[1..-1].each do |b|
-        .btn.btn-large
-          %i{:class=>"icon-#{b[:icon]}"}
-          = b[:title]
-      %hr
-
-  .row.news
-    .span12.article{:"data-content" => "A local man died of old age at the age of 60 because he was old."}
-      %h2 Man Dies at the age of 90
-      %p
-        A local man died of old age at the age of 90 because he was old.
-        %a.news-more{:href=>"#"} Read more...
-      %hr
-
-  .row
-    .streetcars.span12
-      .streetcar.north
-        .icon-arrow-up
-        Next North Bound Streetcar:
-        .time{:id => "timen"}= #JS set
-  .row
-    .streetcars.span12
-      .streetcar.south
-        .icon-arrow-down
-        Next South Bound Streetcar:
-        .time{:id => "times"}= #JS set
-
-  .row
-    .span12
-      .streetcars-updated
-        Streetcars updated ~
-        %span.streetcars-updated-timestamp
+.row
+  .streetcars.span12
+    .streetcar.north
+      .icon-arrow-up
+      Next North Bound Streetcar:
+      .time{:id => "timen"}= #JS set
+.row
+  .streetcars.span12
+    .streetcar.south
+      .icon-arrow-down
+      Next South Bound Streetcar:
+      .time{:id => "times"}= #JS set

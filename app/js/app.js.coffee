@@ -49,7 +49,7 @@ $ ->
 
 
   renderSchedule = (schedule) ->
-    console.log times
+  #  console.log times
 
     # Generating nice, human readable bus times
     dateStrings = for date in Object.values(schedule)[0]
@@ -79,6 +79,9 @@ $ ->
   
   update()
 
+# News: Testing
+$ ->
+  updateNews()
 
 # Weather Updates:
 # Auto every 10 minutes
@@ -90,7 +93,7 @@ $ ->
 #Cats
 $ ->
   getKitten()
-  $(".draw-btn").click ->   getKitten()
+  $(".draw-btn").click -> getKitten()
 
 
 # Volume Control
@@ -101,6 +104,12 @@ $ ->
 
   setVolumeLevel = (level) =>
     $volumeLevelIndicator.css "width", "#{level}px"
+    real_level = level* 256 / $volume.innerWidth() ;
+    $.ajax '/set_volume',
+      type: 'GET',
+      dataType: 'html',
+      data: { 'volume': "#{Math.round(real_level)}"}
+
 
   # The volume up and down icons turn the volume to full and mute respectively
   $volumeContainer.find(".icon-volume-up").click => setVolumeLevel($volume.innerWidth())
@@ -109,32 +118,74 @@ $ ->
   # Clicking the progress bar sets the volume to the clicked level
   $volume.click (e) => setVolumeLevel e.offsetX
 
-# Music Player
-# TODO
-# $ ->
-#  $("#play").click ->
-#    console.log("test")
-#    $.ajax '/play',
-#      type: 'GET'
-#      dataType: 'html'
-#      success: (data, textStatus, jqXHR) ->
-#        console.log(data)
 
-# Browse Music
+# Browse Music + Music Player
 $ ->
+  playing = 0;
+  titleUpdater = ->
+    $.ajax '/is_playing',
+      type: 'GET',
+      dataType: 'html',
+      success: (data) ->
+        if data == "1"
+          playing = 1;
+    
+    if playing == 1
+      $.ajax '/now_playing',
+        type: 'GET',
+        dataType: 'html',
+        success: (data) ->
+          $(".song-name").html(data)
+    else
+      $(".song-name").html("Not Playing");
+  window.setInterval titleUpdater, 10000
+
+  stream_list="";
+  $.ajax '/streamlist',
+    type: 'GET',
+    dataType: 'json',
+    success: (data) ->
+      stream_list = data
+      $.each data, (key,value) ->
+        $(".audio_streams").append("<tr><td>"+key+"</td></tr>")
+        
   $(".songs-list").on "click", "tr", (e) ->
-    console.log e
+    console.log $(e.target).html()
+    console.log stream_list[$(e.target).html()]
     $(e.delegateTarget).find("tr.selected").removeClass("selected")
     $(e.currentTarget).addClass("selected")
+    # Load new Stream instantly.
+    $.ajax '/add_stream',
+      type: 'GET',
+      data: {'source': stream_list[$(e.target).html()]},
+      dataType: 'html'
+      success: (data) ->
+        console.log(data)
+    $(".song-name").html("Loading...")
+
+# Music Controls:
+
+  $("#play").click ->
+    $.ajax '/play',
+      type: 'GET',
+      dataType: 'html'
+    $(".song-name").html("Loading...")
+          
+  $("#stop").click ->
+    $.ajax '/stop',
+      type: 'GET',
+      dataType: 'html'
+    $(".song-name").html("Not Playing");
 
 
 # Navigation
 $ ->
-  $(".home-btn").click -> $(".pages").attr "class", "pages show-page-0"
-  $(".page-0 .buttons .btn").click (e) ->
-    pageId = $(".page-0 .buttons .btn").index(e.target) + 1
-    console.log(pageId)
-    $(".pages").attr("class", "pages show-page-#{pageId}")
+  num_pages=7
+  $(".buttons .btn").click (e) ->
+    if $(".buttons .btn").index(e.target) > -1
+      pageId = $(".buttons .btn").index(e.target) % num_pages
+      console.log(pageId)
+      $(".pages").attr("class", "pages show-page-#{pageId}")
 
 
 # News
@@ -142,7 +193,8 @@ $ ->
   $newsModal = $('#newsModal').modal("hide")
   $(".article").on "click", "a.news-more", (e) ->
     title = $(e.delegateTarget).find("h2").html()
-    description = $(e.delegateTarget).data("content")
-    $newsModal.find("h3").html(title)
-    $newsModal.find("p").html(description)
+    content =$(e.delegateTarget).find(".news-content").html()
+    source = $(e.delegateTarget).find(".news-source").html()
+    $newsModal.find("h3").html(title + " From: " + source)
+    $newsModal.find("p").html(content)
     $newsModal.modal('show')

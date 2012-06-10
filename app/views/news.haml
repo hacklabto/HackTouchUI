@@ -1,10 +1,14 @@
 .row.songs-list
   .span12
-    %table.table.table-striped
-      - (0..4).each do |a|
-        %tr.article{:"data-content" => "A local man died of old age at the age of 60 because he was old."}
+    %table.table.table-striped.news-table
+      - (0..(feed_list.length*5 - 1)).each do |a|
+        %tr.article
           %td
-            %h2 A Man dies at 90
-            %p
+            %h2{:id => "news-title-#{a}"} A Man dies at 90
+            %p.news-description{:id => "news-description-#{a}"}
               A local man died of old age at the age of 90 because he was old.
-              %a.news-more{:href=>"#"} Read more...
+            %a.news-more{:href=>"#"} Read more...
+            %p.news-content.newshidden{:id => "news-content-#{a}"}
+              A local man died of old age at the age of 60 because he was old.
+            %p.news-source.newshidden{:id => "news-source-#{a}"}
+              Bob told me
