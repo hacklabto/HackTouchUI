@@ -1,17 +1,25 @@
+require File.join Padrino.root, "lib", "fake_tcp_socket.rb"
+
 class VLCControl
 
-  if system('pgrep vlc')
-    logger.info "Found VLC, using existing."
-  else
-    logger.info "Starting new vlc instance..."
-    IO.popen('vlc --intf telnet');
-  end
+  unless Padrino.env == :development
+    if system('pgrep vlc')
+      logger.info "Found VLC, using existing."
+    else
+      logger.info "Starting new vlc instance..."
+      IO.popen('vlc --intf telnet');
+    end
   
-  @@vlc=TCPSocket.new("127.0.0.1", 4212)
-  @@vlc.puts "admin"
-  @@vlc.puts "set prompt \"\""
+    @@vlc=TCPSocket.new("127.0.0.1", 4212)
+    @@vlc.puts "admin"
+    @@vlc.puts "set prompt \"\""
 
-  logger.info "Connected to VLC successfully"
+    logger.info "Connected to VLC successfully"
+
+  else
+    logger.info "Development environment detected, ignoring VLC"
+    @@vlc = FakeTCPSocket.new()
+  end
 
   def initialize
   end

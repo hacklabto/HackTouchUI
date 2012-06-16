@@ -3,20 +3,22 @@
 .pages.show-page-0
   - pages.each_with_index do |page, index|
     %div{:class => "page-#{index}"}
-      .container
-        .row.title
-          .span12
-            %h1
-              %i{:class => "icon-#{page[:icon]}"}
-              %span.touch= page[:title]
+      .container-page.container
+        - if index != 0 # The home page has a big hacktouch slogon
+          .row.title
+            .span12
+              %h1
+                %i{:class => "icon-#{page[:icon]}"}
+                %span.touch= page[:title]
         = haml page[:title].downcase.gsub(" ", "_").to_sym, layout: false
-        %hr
-        .row.buttons
+      .container
+        .row
           .span12
-            - pages.each do |b|
-              .btn.btn-large
-                %i{:class=>"icon-#{b[:icon]}"}
-                = b[:title]
+            .buttons
+              - pages.each do |b|
+                .btn.btn-large
+                  %i{:class=>"icon-#{b[:icon]}"}
+                  = b[:title]
 
 .modal.hide.fade#newsModal
   = haml :"modals/news_article", layout: false
