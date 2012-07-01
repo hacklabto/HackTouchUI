@@ -24,7 +24,7 @@ class MPDControl
   # Called to reconnect when mpd kicks us off for inactivity
   def disconnect_callback( connected )
       unless connected
-        @@mpd.connect
+        @@mpd.connect(true)
       end
   end
 
