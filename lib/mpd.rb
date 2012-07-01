@@ -64,17 +64,17 @@ class MPDControl
   end
 
   def playing?
-    exec.playing?
+    "1" unless !exec.playing?
   end
 
   def now_playing
-    current = mpd.current_song
+    current = exec.current_song
     current.name unless current == nil
   end
 
   def exec
     if !@@mpd.connected?
-      @@mpd.connect
+      @@mpd.connect(true)
     end
     @@mpd
   end
