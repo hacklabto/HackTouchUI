@@ -12,32 +12,32 @@ App.controller do
   
   
   get "/add_stream" do
-    get_vlc.playlist_add(params[:source]);
+    $mpd.playlist_add(params[:source]);
     ""
   end
   
   get "/now_playing" do
-    resp = get_vlc.now_playing;
+    resp = $mpd.now_playing;
     "#{resp}"
   end
   
   get "/is_playing" do
-    resp = get_vlc.playing?;
+    resp = $mpd.playing?;
     "#{resp}"
   end
   
   get "/play"  do
-    get_vlc.play;
+    $mpd.play;
     "";
   end
   
   get "/stop" do
-    get_vlc.stop;
+    $mpd.stop;
     "";
   end
   
   get "/set_volume" do
-    get_vlc.set_volume(params[:volume]);
+    $mpd.set_volume(params[:volume]);
     ""
   end
   
