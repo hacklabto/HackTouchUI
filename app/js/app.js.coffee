@@ -104,7 +104,7 @@ $ ->
 
   setVolumeLevel = (level) =>
     $volumeLevelIndicator.css "width", "#{level}px"
-    real_level = level* 256 / $volume.innerWidth() ;
+    real_level = level* 100 / $volume.innerWidth() ;
     $.ajax '/set_volume',
       type: 'GET',
       dataType: 'html',
