@@ -69,7 +69,7 @@ class MPDControl
 
   def now_playing
     current = exec.current_song
-    current.name unless current == nil
+    current.title unless current == nil
   end
 
   def exec
