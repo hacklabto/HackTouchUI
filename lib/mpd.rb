@@ -1,5 +1,6 @@
 require "ibrmpd"
 
+
 class MPDControl
 
   # Called to reconnect when mpd kicks us off for inactivity
@@ -9,7 +10,7 @@ class MPDControl
       end
   end
 
-  unless Padrino.env == :development
+  def initialize
     # Create connection object
     @@mpd = MPD.new 'localhost', 6600
     @@mpd.register_callback('disconnect_callback', 
@@ -56,4 +57,7 @@ class MPDControl
   def exec
     if !@@mpd.connected?
       @@mpd.connect
+    end
     @@mpd
+  end
+end
