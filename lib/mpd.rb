@@ -1,5 +1,23 @@
-require "ibrmpd"
+require "librmpd"
+require 'curl'
 
+def get_music(input)
+  if input.match('http')
+    return get_online_music(input)
+  end
+  return [input]
+end
+
+def get_online_music(url)
+  ext = url.scan(/\.([A-z]+)$/).flatten[0]
+  if ext.length == 0
+    return []
+  elsif ext == "pls"
+    curl = CURL.new
+    p = curl.get(url)
+    return p.scan(/^File[0-9]*=(.*)\n/).flatten
+  end
+end
 
 class MPDControl
 
@@ -33,7 +51,7 @@ class MPDControl
 
   def playlist_add(source)
     exec.clear
-    exec.add source
+    get_music(source).each {|x| exec.add x }
     exec.play
   end
 
