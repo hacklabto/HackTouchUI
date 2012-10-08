@@ -1,5 +1,11 @@
 # Lib
 
+$ -> 
+  $("body").mousedown (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    false
+
 #= require ../../lib/js/jquery-1.7.1.min.js
 #= require ../../lib/js/jquery-ui-1.8.16.custom.min.js
 #= require_tree ../../lib/js/
@@ -7,11 +13,6 @@
 # App
 # TODO: move each module's coffeescript to it's own file
 
-$ -> 
-  $("body").mousedown (e) ->
-    e.stopPropagation()
-    e.preventDefault()
-    false
 
 # Clock
 $ ->
