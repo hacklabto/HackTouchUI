@@ -7,6 +7,12 @@
 # App
 # TODO: move each module's coffeescript to it's own file
 
+$ -> 
+  $("body").mousedown (e) ->
+    e.stopPropagation()
+    e.preventDefault()
+    false
+
 # Clock
 $ ->
   $clock = $(".now")
