@@ -20,7 +20,7 @@ gem 'padrino-warden'
 # end
 
 
-gem "thin"
+gem "unicorn"
 
 
 # Assets

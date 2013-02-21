@@ -5,5 +5,4 @@ class App < Padrino::Application
   register Padrino::Assets
   register Padrino::Cache
   enable :caching
-  
 end

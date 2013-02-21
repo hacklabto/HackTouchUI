@@ -1,16 +1,6 @@
 # Helper methods defined here can be accessed in any controller or view in the application
 
 App.helpers do
-  # def simple_helper_method
-  #  ...
-  # end
-  
-  def get_vlc
-    @vlc = VLCControl.new;
-    @vlc
-  end
-  
-  # Sen's code? from old hacktouch software. (the old 2 part ampq method)
   
   def stream_list
     db = Sequel.connect("sqlite://#{File.dirname(__FILE__)}/../../hacktouch.sqlite3")
@@ -91,7 +81,6 @@ App.helpers do
     begin
       client_weather = Weatherman::Client.new             # I'm calling the weather gem class
       @weather_response = client_weather.lookup_by_woeid 4118      # 4118 is the city id from Yahoo weather
-      @weather_condition_yahoo_code = @weather_response.condition['code']      # Check http://developer.yahoo.com/weather/#codes
       @weather_forecast = @weather_response.forecasts
       @has_weather = true
     rescue # This gets called with the internet is down. In these cases we do not want the app to crash
