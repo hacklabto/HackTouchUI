@@ -1,0 +1,9 @@
+%h2{:id => "news-title-#{index}"}
+  =news_item[:title]
+%p.news-description{:id => "news-description-#{@index}"}
+  =news_item[:description]
+%a.news-more{:href=>"#"} Read more...
+%p.news-content.newshidden{:id => "news-content-#{@index}"}
+  =news_item[:content]
+%p.news-source.newshidden{:id => "news-source-#{@index}"}
+  =news_item[:source]

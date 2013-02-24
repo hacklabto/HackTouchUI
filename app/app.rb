@@ -5,4 +5,5 @@ class App < Padrino::Application
   register Padrino::Assets
   register Padrino::Cache
   enable :caching
+  mime_type :woff, 'application/x-font-woff'
 end

@@ -1,11 +1,20 @@
-!!!
+!!! 5
 %html{:lang => "en"}
   %head
-    !=css
+    = stylesheet_link_tag 'app'
     %meta{:charset=>"utf-8"}
     %meta{:"http-equiv"=>"X-UA-Compatible", :content=>"IE=edge,chrome=1"}
     %title Hack Touch
 
   %body.main-site
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          .brand.now= #
+          %p.navbar-text.pull-right
+            %i.icon-headphones
+            %span.song-name
     = yield
-    !=js
+    = javascript_include_tag 'app'
+    .modal.hide.fade#newsModal
+      = haml :"modals/news_article", layout: false

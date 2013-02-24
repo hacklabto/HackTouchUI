@@ -1,6 +1,13 @@
-# News: Testing
 $ ->
-  updateNews()
+  $.get "/news", (data) ->
+    update_news = (index, news_item) ->
+      for own property, value of news_item
+        $("news-#{property}-#{index}").html(value)
+
+    for own index, news_item of data
+      update_news(index, news_item)
+
+    update_news('home', data[0])
 
 $ ->
   $newsModal = $('#newsModal').modal("hide")

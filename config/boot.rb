@@ -14,6 +14,7 @@ Bundler.require(:default, PADRINO_ENV)
 # Padrino::Logger::Config[:development] = { :log_level => :devel, :stream => :stdout }
 # Padrino::Logger::Config[:development][:log_static] = true
 #
+Sprockets.append_path('lib/assets')
 
 ##
 # Add your before load hooks here

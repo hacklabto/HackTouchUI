@@ -1,24 +1,31 @@
-- pages = [ {title: "Home"}, {title: "Browse Music", icon: "headphones"}, {title: "Door Logs", icon: "th-list"}, {title: "News", icon: "inbox"}, {title: "Weather Report", icon: "bar-chart"}, {title: "Street Cars", icon: "road"}, {title: "Cats", icon: "github-sign"} ]
+- pages = [ {headline: "Home"},
+  {headline: "Browse Music", icon: "headphones"},
+  {headline: "Door Logs", icon: "th-list"},
+  {headline: "News", icon: "inbox"},
+  {headline: "Weather Report", icon: "bar-chart"},
+  {headline: "Street Cars", icon: "road", small: "Should I stay or should I go?"},
+  {headline: "Cats", icon: "github-sign", small:  "Choose Kittys for Science!"} ]
 
 .pages.show-page-0
   - pages.each_with_index do |page, index|
     %div{:class => "page-#{index}"}
       .container-page.container
         - if index != 0 # The home page has a big hacktouch slogon
-          .row.title
-            .span12
-              %h1
-                %i{:class => "icon-#{page[:icon]}"}
-                %span.touch= page[:title]
-        = haml page[:title].downcase.gsub(" ", "_").to_sym, layout: false
-      .container
-        .row
-          .span12
-            .buttons
-              - pages.each do |b|
-                .btn.btn-large
-                  %i{:class=>"icon-#{b[:icon]}"}
-                  = b[:title]
+          .page-header
+            %h1
+              %i{:class => "icon-#{page[:icon]}"}
+              = page[:headline]
+              %small= page[:small] if page[:small]
+        = haml page[:headline].downcase.gsub(" ", "_").to_sym, layout: false
 
-.modal.hide.fade#newsModal
-  = haml :"modals/news_article", layout: false
+.navbar.navbar-fixed-bottom
+  .navbar-inner
+    .container
+      .brand HackTouch 2.1
+      %ul.nav
+        - pages.each_with_index do |b, index|
+          %li
+            %a{:href=>"#page-#{index}", :title => b[:small]}
+              %i{:class=>"icon-#{b[:icon]}"}
+              = b[:headline]
+

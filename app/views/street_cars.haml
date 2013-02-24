@@ -6,6 +6,5 @@
   - routes.each do |street, directions|
     - directions.each do |d|
       %div{:class => "#{street}-#{d}".downcase}
-        = # %i{:class => "icon-arrow-#{direction_map[d]}"}
         = "#{street} #{d}bound".titleize
         %span.time{:id => "#{street}#{d}"} Undefined

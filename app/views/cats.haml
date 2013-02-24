@@ -1,36 +1,25 @@
-.row
-  .span12
-    %h3.sub-header Choose Kittys for Science!
-
-
 .row.kitten-choice-headers
-  .span6
-    This Kitty?
-
-  .span6
-    Or this Kitty?
+  .span6 This Kitty?
+  .span6 Or this Kitty?
 
 .row.kitten-images
   .span6
-    %a{id:"kitten0vote", href: "javascript: getKitten()"}
-      .image{id: "kitten0", style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
+    %a{href: "#"}
+      .image{style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
   .span6
-    %a{id:"kitten1vote", href: "javascript: getKitten()"}
-      .image{id: "kitten1", style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
+    %a{href: "#"}
+      .image{style: "background-image: url('http://kittenwar.com/c_images/2010/09/23/194291.1.jpg')"}
+
 .kitten-images-background
+
 .row.kitten-names
   .span6
-    .kitten-name{:id=>"kitten0name"} Bob
+    .kitten-name Bob
   .span6
-    .kitten-name{:id=>"kitten1name"} Joe
+    .kitten-name Joe
+
 .row.kitten-results
+
+.row
   .span12
-    %span.results-0
-    Unfortunately voting is currently 
-    %span.label.label-important BROKEN
-    Perhaps you should fix it with science?
-- if false # Disabled until voting is fixed (because this plus the voting is broken stuff = too much vertical space)
-  .row
-    .span12
-      .btn.btn-primary.btn-large.pull-left.draw-btn Draw
-  
+    .btn.btn-primary.btn-large.draw-btn Draw

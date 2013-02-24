@@ -1,52 +1,40 @@
-.row.title
-  .span8
-    %h1
-      %span.hack Hack
-      %span.touch Touch
-    %h2 *now with 100% more 2.0
-  .now= # JS sets the inner html of this to the current time
+.row.page-header
+  %h1
+    HackTouch
+    %small now with 110% more 2.0
 
 .row.music-player
   .span12
-    %hr
     .music-title
       %i.icon-headphones
-      %span.song-name Baptism - Crystal Castles
+      %span.song-name No connection to music player
     .volume-level
       %i.icon-volume-down
       .progress.progress-success.volume-level-progress
         .bar{style: "width: 40%"}
       %i.icon-volume-up
 
-    - buttons = [ {title: "Play", icon: "play"}, {title: "Pause", icon: "pause"}, {title: "Stop", icon: "stop"} ]
-    - buttons.each do |b|
-      .btn.btn-large{:id => b[:icon], :style => (b[:title] == "Pause")? "display: none;" : ""}
-        %i{:class=>"icon-#{b[:icon]}"}
-        = b[:title]
-
-    %hr.music-hr
+    .btn-group
+      %button.btn.btn-large.audio-play
+        %i.icon-play
+        Play
+      %button.btn.btn-large.audio-stop
+        %i.icon-stop
+        Stop
 
 .row.news
   .span12.article
-    %h2{:id => "news-title-home"} A Man dies at 90
-    %p.news-description{:id => "news-description-home"}
-      A local man died of old age at the age of 90 because he was old.
-    %a.news-more{:href=>"#"} Read more...
-    %p.news-content.newshidden{:id => "news-content-home"}
-      A local man died of old age at the age of 90 because he was old.
-    %p.news-source.newshidden{:id => "news-source-home"}
-      Bob told me
-    %hr
+    =partial "news_item", :object => @news_items.first, :locals => {:index => "home"}
 
 .row
   .streetcars.span12
     .streetcar.north
       .icon-arrow-up
-      Next North Bound Streetcar:
-      .time{:id => "timen"}= #JS set
+      Spadina NB:
+      .time#timen= #JS set
 .row
   .streetcars.span12
     .streetcar.south
       .icon-arrow-down
-      Next South Bound Streetcar:
-      .time{:id => "times"}= #JS set
+      Spadina SB:
+      .time#times= #JS set
