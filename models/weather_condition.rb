@@ -37,6 +37,10 @@ class WeatherCondition
     @atmosphere['humidity']
   end
 
+  def day
+    @data['day']
+  end
+
   def icon
     case code
       when 0, 1, 2
@@ -119,6 +123,7 @@ class WeatherCondition
     }
     if is_forecast?
       details = {
+        :day => day,
         :temp_high => high,
         :temp_low => low,
       }

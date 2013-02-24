@@ -4,6 +4,7 @@ App.controller do
 
   get :index do
     @news_items = cached_news
+    @weather = cached_weather
     render :index
   end
 

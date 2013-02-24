@@ -1,42 +1,40 @@
 .row.weather-report
   .span6
     .well
-      %div{id:"current_icon", class: "icon #{show_weather_icon_current}" }
+      #current_icon.icon{class: @weather[:current].icon}
       %h3 Current
-      %span{id: "current_condition"}= weather_condition_current
+      %span#current_condition= @weather[:current].text
       %table.table
         %tr
           %th Temperature
-          %td{:id=>"current_temp"} #{weather_temp_current}
+          %td#current_temp= @weather[:current].temp
         %tr
           %th Wind Speed
-          %td{id: "current_windspeed"} #{weather_windspeed}
+          %td#current_windspeed= @weather[:current].windspeed
         %tr
           %th Humidity
-          %td{id: "current_humidity"} #{weather_humidity}
+          %td#current_humidity= @weather[:current].humidity
   .span3
     .well
-      %div{id: "today_icon", class: "icon #{show_weather_icon_today}" }
+      #today_icon.icon{class: @weather[:today].icon}
       %h3 Today
-      %span{id: "today_condition"}= weather_condition_today
+      %span#today_condition= @weather[:today].text
       %table.table
         %tr
           %th High
-          %td{:id=>"today_temp_high"} #{weather_temp_today_high}
+          %td#today_temp_high= @weather[:today].high
         %tr
           %th Low
-          %td{:id=>"today_temp_low"} #{weather_temp_today_low}
+          %td#today_temp_low= @weather[:today].low
   .span3
     .well
-      %div{id:"tomorrow_icon", class: "icon #{show_weather_icon_tomorrow}" }
-      %h3{id: "tomorrow_day"} #{weather_tomorrow_text}
-      %span{id: "tomorrow_condition"}= weather_condition_tomorrow
+      #tomorrow_icon.icon{class: @weather[:tomorrow].icon}
+      %h3#tomorrow_day= @weather[:tomorrow].day
+      %span#tomorrow_condition= @weather[:tomorrow].text
       %table.table
         %tr
           %th High
-          %td{:id=>"tomorrow_temp_high"} #{weather_temp_tomorrow_high}
+          %td#tomorrow_temp_high= @weather[:tomorrow].high
         %tr
           %th Low
-          %td{:id=>"tomorrow_temp_low"} #{weather_temp_tomorrow_low}
-          
-    
+          %td#tomorrow_temp_low= @weather[:tomorrow].low
