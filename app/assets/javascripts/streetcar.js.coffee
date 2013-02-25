@@ -66,8 +66,7 @@ $ ->
       this.interval = window.setInterval this.render, 1000
     render: ->
       human_readable = (date) ->
-        date.format('{12hr}:{mm} {tt}')
-        date.relative (val,unit) -> "#{val} #{Date.getLocale().units[unit][0..2]}"
+        date.relative (val,unit) -> "#{val}&nbsp;#{Date.getLocale().units[unit][0..2]}"
       this.$el.html(_.map(this.collection.pluck('date'), human_readable).join("<span class='comma'>, </span>"))
 
   monitored_stops = [
