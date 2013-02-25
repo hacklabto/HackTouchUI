@@ -24,7 +24,7 @@
       .brand HackTouch 2.1
       %ul.nav
         - pages.each_with_index do |b, index|
-          %li
+          %li{:id => "nav-#{index}"}
             %a{:href=>"#page-#{index}", :title => b[:small]}
               %i{:class=>"icon-#{b[:icon]}"}
               = b[:headline]

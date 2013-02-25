@@ -1,12 +1,16 @@
 # Navigation
 $ ->
-  show_page = (href) ->
-    page_id = href.replace /.*page-/, ""
-    $(".pages").attr("class", "pages show-page-#{page_id}")
-    $(".navbar .nav li").removeClass("active")
-    $(".navbar .nav li").has("a[href=\"#{href}\"]").addClass("active")
+  class Router extends Backbone.Router
+    routes:
+      "page-:id": "getPage"
+
+  router = new Router
+  router.on 'route:getPage', (id) ->
+    $(".pages").attr("class", "pages show-page-#{id}")
+    $(".navbar .active").removeClass("active")
+    $(".navbar #nav-#{id}").addClass("active")
 
   $(".navbar .nav").on "click", "a", (e) ->
-    show_page $(this).attr('href')
+    router.navigate $(this).attr('href'), {trigger: true}
 
-  show_page location.hash
+  Backbone.history.start()
