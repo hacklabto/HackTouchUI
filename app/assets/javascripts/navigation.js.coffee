@@ -7,6 +7,6 @@ $ ->
     $(".navbar .nav li").has("a[href=\"#{href}\"]").addClass("active")
 
   $(".navbar .nav").on "click", "a", (e) ->
-    show_page $(e.target).attr('href')
+    show_page $(this).attr('href')
 
   show_page location.hash
