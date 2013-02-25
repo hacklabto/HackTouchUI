@@ -9,5 +9,5 @@ $ ->
           else
             $element.class("icon " + value)
 
-    weatherUpdate()
+  weatherupdate()
   window.setInterval weatherupdate, 600000
