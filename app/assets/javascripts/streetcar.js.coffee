@@ -1,59 +1,96 @@
 $ ->
 
-  routes =
-  spadinanorth:
-    route: 510
-    stopId: 6577
-  spadinasouth:
-    route: 510
-    stopId: 3159
-  collegeeast:
-    route: 506
-    stopId: 1010
-  collegewest:
-    route: 506
-    stopId: 9193
-  dundaseast:
-    route: 505
-    stopId: 6046
-  dundaswest:
-    route: 505
-    stopId: 1212
+  class Prediction extends Backbone.Model
+    idAttribute: 'vehicle'
 
+  class StopPredictions extends Backbone.Collection
+    model: Prediction,
+    initialize: (options) ->
+      this.route = options.route
+      this.stop = options.stop
+      this.id = options.id
+    set: (attrs, options) -> # hack to get collection -> collection updates working
+      this.update(attrs.response, options)
+      this.sort()
+    _validate: (attrs, options) -> # just so we can use collections of collections
+      true
+    parse: (response) ->
+      _.map $(response).find('prediction'), (element) ->
+        $e = $(element)
+        {
+          date: new Date parseInt $e.attr 'epochTime'
+          seconds: $e.attr 'seconds'
+          minutes: $e.attr 'minutes'
+          branch: $e.attr 'branch'
+          vehicle: $e.attr 'vehicle'
+        }
+    comparator: (prediction) ->
+      prediction.get 'date'
 
-  renderSchedule = (schedule) ->
-    # Generating nice, human readable bus times
-    dateStrings = for date in Object.values(schedule)[0]
-      date.format('{12hr}:{mm} {tt}')
-      # Relative street car schedule formatting left here for easy uncommenting in case it turns out that people hate the absolute times
-      #date.relative (val,unit ) -> "#{val} #{Date.getLocale().units[unit][0..2]}"
+  class MultiStopPredictions extends Backbone.Collection
+    model: StopPredictions
+    url: "http://webservices.nextbus.com/service/publicXMLFeed",
+    initialize: (models) ->
+      this.monitored_stops = models
+    poll: (interval) ->
+      if (this.interval)
+        window.clearInterval this.interval
+      this.fetch()
+      this.interval = window.setInterval _.bind(this.fetch, this), interval
+    fetch: ->
+      multistop_naming = (stop) ->
+        stop.route + '|' + stop.stop
+      options =
+        dataType: 'xml'
+        update: true
+        remove: true
+        add: true
+        traditional: true # repeat multiple "stops" params w/o square brackets
+        data:
+          command: 'predictionsForMultiStops'
+          a: 'ttc'
+          stops: _.map(this.monitored_stops, multistop_naming)
+      super options
+    parse: (response) ->
+      _.map this.monitored_stops, (stop) ->
+        stop.response = $(response).find("predictions[routeTag=#{stop.route}][stopTag=#{stop.stop}]")
+        stop
 
-    this.html dateStrings.join("<span class='comma'>, </span>")
-    return true
+  class StopPredictionView extends Backbone.View
+    initialize: ->
+      _.bindAll(this, 'render')
+      this.collection.on 'add', this.render
+      this.collection.on 'remove', this.render
+      this.collection.on 'change', this.render
+      this.collection.on 'reset', this.render
+      this.interval = window.setInterval this.render, 1000
+    render: ->
+      human_readable = (date) ->
+        date.format('{12hr}:{mm} {tt}')
+        date.relative (val,unit) -> "#{val} #{Date.getLocale().units[unit][0..2]}"
+      this.$el.html(_.map(this.collection.pluck('date'), human_readable).join("<span class='comma'>, </span>"))
 
-  update = ->
-    # Front Page
-    fetchPrediction routes.spadinanorth.route, routes.spadinanorth.stopId, renderSchedule.bind $("#times")
-    fetchPrediction routes.spadinasouth.route, routes.spadinasouth.stopId, renderSchedule.bind $("#timen")
+  monitored_stops = [
+    {id: 'spadinanorth', route: 510, stop: 6577}
+    {id: 'spadinasouth', route: 510, stop: 3159}
+    {id: 'collegeeast', route: 506, stop: 1010}
+    {id: 'collegewest', route: 506, stop: 9193}
+    {id: 'dundaseast', route: 505, stop: 6046}
+    {id: 'dundaswest', route: 505, stop: 1212}
+  ]
 
-    # Street cars page
-    predicts = for own element,param of routes
-      fetchPrediction param.route, param.stopId, renderSchedule.bind $("##{element}")
+  multistop = new MultiStopPredictions monitored_stops
+  multistop.poll(30000)
 
-  fetchPrediction = (route, stop, callback) ->
-    $.get "http://webservices.nextbus.com/service/publicXMLFeed"
-      command: "predictions",
-      a: "ttc",
-      r: route,
-      s: stop,
-      (xml) ->
-        schedule = {}
-        $(xml).find('direction').each ->
-          thisDirectionSchedule = schedule[$(this).attr('title')] = new Array()
-          $(this).find('prediction').each ->
-            # Pushing the epoch time of this bus to the list of buses comming in the current direction
-            thisDirectionSchedule.push new Date( parseInt( $(this).attr('epochTime') ) )
-        callback(schedule)
+  for stop in monitored_stops
+    new StopPredictionView
+      collection: multistop.get(stop.id)
+      el: $("##{stop.id}")
 
-  update()
-  window.setInterval update, 60000
+  # views for home page
+  new StopPredictionView
+    collection: multistop.get 'spadinanorth'
+    el: $("#timen")
+  new StopPredictionView
+    collection: multistop.get 'spadinasouth'
+    el: $("#times")
