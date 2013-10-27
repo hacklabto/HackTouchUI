@@ -16,4 +16,7 @@ App.controller do
     render cached_weather
   end
 
+  get :doorlog, :provides => :json do
+    render cached_doorlog
+  end
 end

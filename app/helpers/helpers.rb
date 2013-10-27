@@ -19,4 +19,9 @@ App.helpers do
     end
   end
 
+  def cached_doorlog
+    cache("doorlog", :expires_in => 300) do
+      DoorLog.getRecent()
+    end
+  end
 end

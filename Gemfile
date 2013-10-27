@@ -37,3 +37,6 @@ gem "json", "~> 1.6.5"
 #music
 gem "librmpd", "~> 0.1.1"
 gem "curl"
+
+#doorlog
+gem "mysql2"
