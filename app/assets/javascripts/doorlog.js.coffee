@@ -1,7 +1,7 @@
 # Door Log list
 $ ->
   doorLogUpdater = ->
-    $.get "/do
+    $.get "/doorlog"
       doorLogUpdater = ->
         $.getJSON "/doorlog", (data) ->
           $(".door-log-list tr").each (ind, elem) ->
