@@ -1,4 +1,4 @@
-class Doorlog
+class DoorLog
   def self.getRecent(last=5)
     client = Mysql2::Client.new(:host => "doorbox.hacklab.to",
                            :username => "touchscreen",
