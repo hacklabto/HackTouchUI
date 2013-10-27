@@ -17,6 +17,6 @@ App.controller do
   end
 
   get :doorlog, :provides => :json do
-    render cached_doorlog
+    cached_doorlog.to_json
   end
 end
