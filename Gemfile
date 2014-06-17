@@ -29,6 +29,8 @@ gem "yahoo_weatherman"
 gem "activerecord", :require => "active_record"
 gem "sqlite3"
 
+gem "therubyracer"
+
 #News
 gem "simple-rss", "~> 1.2.3"
 gem "sanitize", "~> 2.0.3"
@@ -37,3 +39,6 @@ gem "json", "~> 1.6.5"
 #music
 gem "librmpd", "~> 0.1.1"
 gem "curl"
+
+#doorlog
+gem "mysql2"
