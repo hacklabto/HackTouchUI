@@ -36,6 +36,10 @@ package { 'build-essential':
   ensure => installed
 }
 
+package { 'libmysqlclient-dev':
+  ensure => installed
+}
+
 package { 'git-core':
   ensure => installed
 }
