@@ -72,12 +72,10 @@ $ ->
       this.$el.html(_.map(this.collection.pluck('date'), human_readable).join("<span class='comma'>, </span>"))
 
   monitored_stops = [
-    {id: 'spadinanorth', route: 510, stop: 6577}
-    {id: 'spadinasouth', route: 510, stop: 3159}
-    {id: 'collegeeast', route: 506, stop: 1010}
-    {id: 'collegewest', route: 506, stop: 9193}
-    {id: 'dundaseast', route: 505, stop: 6046}
-    {id: 'dundaswest', route: 505, stop: 1212}
+    {id: 'dufferinnorthbound', route: 29, stop: 4031}
+    {id: 'dufferinsouthbound', route: 29, stop: 14799}
+    {id: 'queeneastbound', route: 501, stop: 9255}
+    {id: 'queenwestbound', route: 501, stop: 14701}
   ]
 
   multistop = new MultiStopPredictions monitored_stops
@@ -90,8 +88,11 @@ $ ->
 
   # views for home page
   new StopPredictionView
-    collection: multistop.get 'spadinanorth'
+    collection: multistop.get 'dufferinnorthbound'
     el: $("#timen")
   new StopPredictionView
-    collection: multistop.get 'spadinasouth'
-    el: $("#times")
+    collection: multistop.get 'queenwestbound'
+    el: $("#timew")
+  new StopPredictionView
+    collection: multistop.get 'queeneastbound'
+    el: $("#timee")
