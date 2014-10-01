@@ -3,24 +3,24 @@
 App.helpers do
 
   def cached_news
-    cache("topnews", :expires_in => 300) do
+    cache("topnews", expires_in: 300) do
       NewsFeed.getAllArticles.first 5
     end
   end
 
   def cached_weather
-    cache("weather", :expires_in => 300) do
+    cache("weather", expires_in: 300) do
       w = Weather.new
       {
-        :current  => w.now,
-        :today    => w.today,
-        :tomorrow => w.tomorrow,
+        current: w.now,
+        today: w.today,
+        tomorrow: w.tomorrow,
       }
     end
   end
 
   def cached_doorlog
-    cache("doorlog", :expires_in => 300) do
+    cache("doorlog", expires_in: 300) do
       DoorLog.getRecent()
     end
   end

@@ -1,6 +1,6 @@
 App.controller :audio do
 
-  get "/streamlist", :provides => :json do
+  get "/streamlist", provides: :json do
     render Hash[AudioStream.all.map{|stream| [stream.name, stream.url] }]
   end
 

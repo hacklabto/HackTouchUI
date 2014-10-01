@@ -4,4 +4,4 @@
       - @news_items.each_with_index do |item, index|
         %tr.article
           %td
-            =partial "news_item", :object => item, :locals => { :index => index }
+            =partial "news_item", object: item, locals: { index: index }

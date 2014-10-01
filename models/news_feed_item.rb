@@ -10,10 +10,10 @@ class NewsFeedItem
       desc[147..150]="..."
     end
     {
-      :title => title,
-      :content => description,
-      :source => source,
-      :description => desc
+      title: title,
+      content: description,
+      source: source,
+      description: desc
     }
   end
 
