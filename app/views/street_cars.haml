@@ -1,10 +1,10 @@
-- routes = { spadina: [:north, :south], college: [:east, :west], dundas: [:east, :west] }
+- routes = { dufferin: [:north, :south], queen: [:east, :west], king: [:east, :west] }
 
 - direction_map = { north: "up", south: "down", east: "right", west: "left"}
 
 .streetcar-map
   - routes.each do |street, directions|
     - directions.each do |d|
-      %div{:class => "#{street}-#{d}".downcase}
+      %div{class: "#{street}-#{d}".downcase}
         = "#{street} #{d}bound".titleize
-        %span.time{:id => "#{street}#{d}"} Undefined
+        %span.time{id: "#{street}#{d}bound"} Undefined

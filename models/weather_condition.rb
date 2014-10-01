@@ -118,20 +118,20 @@ class WeatherCondition
 
   def to_hash
     basics = {
-      :icon => icon,
-      :condition => text,
+      icon: icon,
+      condition: text,
     }
     if is_forecast?
       details = {
-        :day => day,
-        :temp_high => high,
-        :temp_low => low,
+        day: day,
+        temp_high: high,
+        temp_low: low,
       }
     else
       details = {
-        :temp => temp,
-        :windspeed => windspeed,
-        :humidity => humidity,
+        temp: temp,
+        windspeed: windspeed,
+        humidity: humidity,
       }
     end
     basics.merge details

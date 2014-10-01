@@ -8,15 +8,15 @@ App.controller do
     render :index
   end
 
-  get :news, :provides => :json do
+  get :news, provides: :json do
     cached_news.to_json
   end
 
-  get :weather, :provides => :json do
+  get :weather, provides: :json do
     render cached_weather
   end
 
-  get :doorlog, :provides => :json do
+  get :doorlog, provides: :json do
     cached_doorlog.to_json
   end
 end

@@ -76,6 +76,8 @@ $ ->
     {id: 'dufferinsouthbound', route: 29, stop: 14799}
     {id: 'queeneastbound', route: 501, stop: 9255}
     {id: 'queenwestbound', route: 501, stop: 14701}
+    {id: 'kingeastbound', route: 504, stop: 4568}
+    {id: 'kingwestbound', route: 504, stop: 4341}
   ]
 
   multistop = new MultiStopPredictions monitored_stops
@@ -91,8 +93,17 @@ $ ->
     collection: multistop.get 'dufferinnorthbound'
     el: $("#timen")
   new StopPredictionView
+    collection: multistop.get 'dufferinsouthbound'
+    el: $("#times")
+  new StopPredictionView
     collection: multistop.get 'queenwestbound'
-    el: $("#timew")
+    el: $("#timeqw")
   new StopPredictionView
     collection: multistop.get 'queeneastbound'
-    el: $("#timee")
+    el: $("#timeqe")
+  new StopPredictionView
+    collection: multistop.get 'kingwestbound'
+    el: $("#timekw")
+  new StopPredictionView
+    collection: multistop.get 'kingeastbound'
+    el: $("#timeke")

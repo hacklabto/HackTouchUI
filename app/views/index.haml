@@ -1,4 +1,4 @@
-- pages = [ {headline: "Home"},
+- pages = [ { headline: "Home" },
   {headline: "Browse Music", icon: "headphones"},
   {headline: "Door Logs", icon: "th-list"},
   {headline: "News", icon: "inbox"},
@@ -8,12 +8,12 @@
 
 .pages.show-page-0
   - pages.each_with_index do |page, index|
-    %div{:class => "page-#{index}"}
+    %div{ class: "page-#{index}"}
       .container-page.container
         - if index != 0 # The home page has a big hacktouch slogon
           .page-header
             %h1
-              %i{:class => "icon-#{page[:icon]}"}
+              %i{ class: "icon-#{page[:icon]}"}
               = page[:headline]
               %small= page[:small] if page[:small]
         = haml page[:headline].downcase.gsub(" ", "_").to_sym, layout: false
@@ -24,8 +24,8 @@
       .brand HackTouch 2.1
       %ul.nav
         - pages.each_with_index do |b, index|
-          %li{:id => "nav-#{index}"}
-            %a{:href=>"#page-#{index}", :title => b[:small]}
-              %i{:class=>"icon-#{b[:icon]}"}
+          %li{id: "nav-#{index}"}
+            %a{href: "#page-#{index}", title: b[:small]}
+              %i{class: "icon-#{b[:icon]}"}
               = b[:headline]
 
