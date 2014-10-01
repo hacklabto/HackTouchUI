@@ -42,3 +42,6 @@ gem "curl"
 
 #doorlog
 gem "mysql2"
+
+#deployment
+gem 'capistrano', '~>3.2.1'
