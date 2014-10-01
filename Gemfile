@@ -1,10 +1,10 @@
-source :rubygems
+source 'https://rubygems.org'
 
 
 # Project requirements
 gem 'eventmachine', "~> 1.0.0.beta.4"
 gem 'rake'
-gem 'sinatra-flash', :require => 'sinatra/flash'
+gem 'sinatra-flash', require: 'sinatra/flash'
 
 # Padrino Stable Gem
 gem 'padrino'
@@ -26,7 +26,7 @@ gem 'haml'
 gem "yahoo_weatherman"
 
 #For config, etc:
-gem "activerecord", :require => "active_record"
+gem "activerecord", require: "active_record"
 gem "sqlite3"
 
 gem "therubyracer"
